@@ -6,13 +6,14 @@
   vars_files:
     - ./vars/configure_uplinks_vars.yml
 
+
   tasks:
 
     - name: Get available leaf switch pairs
       #GET {{apic}}/node/class/fabricNodePEp.json
       aci_switch_policy_vpc_protection_group:
         host: apic
-        username: admin
-        password: SomeSecretPassword
+        username: {{ aci_username }}
+        password: {{ aci_password }}
         state: query
       register: query_result
