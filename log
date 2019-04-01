@@ -1,0 +1,347 @@
+2019-04-01 16:26:59,064 p=23361 u=steve |  ERROR! Syntax Error while loading YAML.
+  found unacceptable key (unhashable type: 'AnsibleMapping')
+
+The error appears to have been in '/home/steve/ansible-aci/configure_uplinks.yml': line 16, column 20, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        host: apic
+        username: {{ aci_username }}
+                   ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes.  Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2019-04-01 16:30:58,185 p=23441 u=steve |  ERROR! Syntax Error while loading YAML.
+  found unacceptable key (unhashable type: 'AnsibleMapping')
+
+The error appears to have been in '/home/steve/ansible-aci/configure_uplinks.yml': line 16, column 20, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        host: apic
+        username: {{ aci_username }}
+                   ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes.  Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2019-04-01 16:33:52,837 p=23509 u=steve |  ERROR! Syntax Error while loading YAML.
+  found unacceptable key (unhashable type: 'AnsibleMapping')
+
+The error appears to have been in '/home/steve/ansible-aci/configure_uplinks.yml': line 17, column 20, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        host: apic
+        username: {{ aci_username }}
+                   ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes.  Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2019-04-01 16:41:56,160 p=23587 u=steve |  ERROR! Syntax Error while loading YAML.
+  found unacceptable key (unhashable type: 'AnsibleMapping')
+
+The error appears to have been in '/home/steve/ansible-aci/configure_uplinks.yml': line 18, column 20, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        username: "{{ aci_username }}"
+        password: {{ aci_password }}
+                   ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes.  Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2019-04-01 16:42:21,553 p=23609 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:42:21,564 p=23609 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:42:25,077 p=23609 u=steve |  fatal: [aits_preprod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,191 p=23609 u=steve |  fatal: [ada_preprod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,206 p=23609 u=steve |  fatal: [southbelt_preprod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,239 p=23609 u=steve |  fatal: [southbelt_prod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,240 p=23609 u=steve |  fatal: [aits_prod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,250 p=23609 u=steve |  fatal: [ada_prod]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:42:25,262 p=23609 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:42:25,262 p=23609 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:42:25,262 p=23609 u=steve |  ada_preprod                : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:42:25,263 p=23609 u=steve |  ada_prod                   : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:42:25,263 p=23609 u=steve |  aits_preprod               : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:42:25,264 p=23609 u=steve |  aits_prod                  : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:42:25,264 p=23609 u=steve |  southbelt_preprod          : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:42:25,265 p=23609 u=steve |  southbelt_prod             : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:44:56,003 p=23873 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:44:56,013 p=23873 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:44:56,437 p=23873 u=steve |  fatal: [apic-sim-a.intranet.local]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:44:56,440 p=23873 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:44:56,440 p=23873 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:44:56,441 p=23873 u=steve |  apic-sim-a.intranet.local  : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:46:01,285 p=23958 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:46:01,309 p=23958 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:46:01,706 p=23958 u=steve |  fatal: [apic-sim-a.intranet.local]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:46:01,710 p=23958 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:46:01,710 p=23958 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:46:01,710 p=23958 u=steve |  apic-sim-a.intranet.local  : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:47:05,677 p=24025 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:47:05,688 p=24025 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:47:06,104 p=24025 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {"changed": false, "msg": "Failed to connect to apic at port 443: [Errno -2] Name or service not known"}
+2019-04-01 16:47:06,105 p=24025 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:47:06,106 p=24025 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:47:06,106 p=24025 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:57:56,219 p=24337 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:57:56,231 p=24337 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:57:57,171 p=24337 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {"changed": false, "msg": "Connection failed for https://apic/api/aaaLogin.json. Request failed: <urlopen error [Errno -2] Name or service not known>"}
+2019-04-01 16:57:57,175 p=24337 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:57:57,175 p=24337 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:57:57,176 p=24337 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 16:58:54,202 p=24383 u=steve |  ansible-playbook 2.7.0
+  config file = /home/steve/ansible-aci/ansible.cfg
+  configured module search path = [u'/home/steve/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible
+  executable location = /home/steve/venv-ansible-aci/bin/ansible-playbook
+  python version = 2.7.15rc1 (default, Nov 12 2018, 14:31:15) [GCC 7.3.0]
+2019-04-01 16:58:54,202 p=24383 u=steve |  Using /home/steve/ansible-aci/ansible.cfg as config file
+2019-04-01 16:58:54,203 p=24383 u=steve |  setting up inventory plugins
+2019-04-01 16:58:54,269 p=24383 u=steve |  Parsed /home/steve/ansible-aci/hosts inventory source with ini plugin
+2019-04-01 16:58:54,435 p=24383 u=steve |  Loading callback plugin default of type stdout, v2.0 from /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/plugins/callback/default.pyc
+2019-04-01 16:58:54,783 p=24383 u=steve |  PLAYBOOK: configure_uplinks.yml ***********************************************************************************************
+2019-04-01 16:58:54,784 p=24383 u=steve |  1 plays in configure_uplinks.yml
+2019-04-01 16:58:54,803 p=24383 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 16:58:54,805 p=24383 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 16:58:54,813 p=24383 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 16:58:54,814 p=24383 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 16:58:54,829 p=24383 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 16:58:54,830 p=24383 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 16:58:54,832 p=24383 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 16:58:54,837 p=24383 u=steve |  META: ran handlers
+2019-04-01 16:58:54,849 p=24383 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 16:58:54,849 p=24383 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 16:58:54,850 p=24383 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 16:58:54,850 p=24383 u=steve |  task path: /home/steve/ansible-aci/configure_uplinks.yml:13
+2019-04-01 16:58:55,234 p=24383 u=steve |  Using module file /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/modules/network/aci/aci_switch_policy_vpc_protection_group.py
+2019-04-01 16:58:55,427 p=24383 u=steve |  The full traceback is:
+WARNING: The below traceback may *not* be related to the actual failure.
+  File "/tmp/ansible_aci_switch_policy_vpc_protection_group_payload_YyzZeN/ansible_aci_switch_policy_vpc_protection_group_payload.zip/ansible/module_utils/network/aci/aci.py", line 205, in login
+    self.response_json(auth['body'])
+
+2019-04-01 16:58:55,430 p=24383 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {
+    "changed": false, 
+    "invocation": {
+        "module_args": {
+            "certificate_name": null, 
+            "host": "apic", 
+            "output_level": "normal", 
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER", 
+            "port": null, 
+            "private_key": null, 
+            "protection_group": null, 
+            "protection_group_id": null, 
+            "protocol": "https", 
+            "state": "query", 
+            "switch_1_id": null, 
+            "switch_2_id": null, 
+            "timeout": 30, 
+            "use_proxy": true, 
+            "use_ssl": true, 
+            "username": "username", 
+            "validate_certs": false, 
+            "vpc_domain_policy": null
+        }
+    }, 
+    "msg": "Connection failed for https://apic/api/aaaLogin.json. Request failed: <urlopen error [Errno -2] Name or service not known>"
+}
+2019-04-01 16:58:55,432 p=24383 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 16:58:55,432 p=24383 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 16:58:55,433 p=24383 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 17:01:50,787 p=24461 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:01:50,798 p=24461 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:01:50,836 p=24461 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'inventory_host' is undefined\n\nThe error appears to have been in '/home/steve/ansible-aci/configure_uplinks.yml': line 13, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: Get available leaf switch pairs\n      ^ here\n"}
+2019-04-01 17:01:50,840 p=24461 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 17:01:50,840 p=24461 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:01:50,840 p=24461 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 17:02:52,217 p=24507 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:02:52,231 p=24507 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:02:52,893 p=24507 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {"changed": false, "error": {"code": "401", "text": "Username or ******** is incorrect - FAILED local authentication"}, "msg": "Authentication failed: 401 Username or ******** is incorrect - FAILED local authentication"}
+2019-04-01 17:02:52,896 p=24507 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 17:02:52,897 p=24507 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:02:52,897 p=24507 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 17:03:17,131 p=24543 u=steve |  ansible-playbook 2.7.0
+  config file = /home/steve/ansible-aci/ansible.cfg
+  configured module search path = [u'/home/steve/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible
+  executable location = /home/steve/venv-ansible-aci/bin/ansible-playbook
+  python version = 2.7.15rc1 (default, Nov 12 2018, 14:31:15) [GCC 7.3.0]
+2019-04-01 17:03:17,131 p=24543 u=steve |  Using /home/steve/ansible-aci/ansible.cfg as config file
+2019-04-01 17:03:17,131 p=24543 u=steve |  setting up inventory plugins
+2019-04-01 17:03:17,180 p=24543 u=steve |  Parsed /home/steve/ansible-aci/hosts inventory source with ini plugin
+2019-04-01 17:03:17,304 p=24543 u=steve |  Loading callback plugin default of type stdout, v2.0 from /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/plugins/callback/default.pyc
+2019-04-01 17:03:17,606 p=24543 u=steve |  PLAYBOOK: configure_uplinks.yml ***********************************************************************************************
+2019-04-01 17:03:17,607 p=24543 u=steve |  1 plays in configure_uplinks.yml
+2019-04-01 17:03:17,621 p=24543 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:03:17,622 p=24543 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:03:17,625 p=24543 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:03:17,626 p=24543 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:03:17,628 p=24543 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:03:17,629 p=24543 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:03:17,629 p=24543 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:03:17,632 p=24543 u=steve |  META: ran handlers
+2019-04-01 17:03:17,640 p=24543 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:03:17,640 p=24543 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:03:17,641 p=24543 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:03:17,641 p=24543 u=steve |  task path: /home/steve/ansible-aci/configure_uplinks.yml:13
+2019-04-01 17:03:17,939 p=24543 u=steve |  Using module file /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/modules/network/aci/aci_switch_policy_vpc_protection_group.py
+2019-04-01 17:03:18,112 p=24543 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {
+    "changed": false, 
+    "error": {
+        "code": "401", 
+        "text": "Username or ******** is incorrect - FAILED local authentication"
+    }, 
+    "invocation": {
+        "module_args": {
+            "certificate_name": null, 
+            "host": "apic27-sim-2-a.intranet.local", 
+            "output_level": "normal", 
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER", 
+            "port": null, 
+            "private_key": null, 
+            "protection_group": null, 
+            "protection_group_id": null, 
+            "protocol": "https", 
+            "state": "query", 
+            "switch_1_id": null, 
+            "switch_2_id": null, 
+            "timeout": 30, 
+            "use_proxy": true, 
+            "use_ssl": true, 
+            "username": "username", 
+            "validate_certs": false, 
+            "vpc_domain_policy": null
+        }
+    }, 
+    "msg": "Authentication failed: 401 Username or ******** is incorrect - FAILED local authentication"
+}
+2019-04-01 17:03:18,115 p=24543 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 17:03:18,115 p=24543 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:03:18,115 p=24543 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 17:04:30,636 p=24607 u=steve |  ansible-playbook 2.7.0
+  config file = /home/steve/ansible-aci/ansible.cfg
+  configured module search path = [u'/home/steve/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible
+  executable location = /home/steve/venv-ansible-aci/bin/ansible-playbook
+  python version = 2.7.15rc1 (default, Nov 12 2018, 14:31:15) [GCC 7.3.0]
+2019-04-01 17:04:30,637 p=24607 u=steve |  Using /home/steve/ansible-aci/ansible.cfg as config file
+2019-04-01 17:04:30,637 p=24607 u=steve |  setting up inventory plugins
+2019-04-01 17:04:30,712 p=24607 u=steve |  Parsed /home/steve/ansible-aci/hosts inventory source with ini plugin
+2019-04-01 17:04:30,839 p=24607 u=steve |  Loading callback plugin default of type stdout, v2.0 from /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/plugins/callback/default.pyc
+2019-04-01 17:04:31,153 p=24607 u=steve |  PLAYBOOK: configure_uplinks.yml ***********************************************************************************************
+2019-04-01 17:04:31,154 p=24607 u=steve |  1 plays in configure_uplinks.yml
+2019-04-01 17:04:31,167 p=24607 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:04:31,168 p=24607 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:04:31,170 p=24607 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:04:31,171 p=24607 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:04:31,173 p=24607 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:04:31,173 p=24607 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:04:31,174 p=24607 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:04:31,184 p=24607 u=steve |  META: ran handlers
+2019-04-01 17:04:31,194 p=24607 u=steve |  Read vars_file './vars/configure_uplinks_vars.yml'
+2019-04-01 17:04:31,195 p=24607 u=steve |  Read vars_file './credentials/aci_credentials.yml'
+2019-04-01 17:04:31,196 p=24607 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:04:31,196 p=24607 u=steve |  task path: /home/steve/ansible-aci/configure_uplinks.yml:13
+2019-04-01 17:04:31,503 p=24607 u=steve |  Using module file /home/steve/venv-ansible-aci/local/lib/python2.7/site-packages/ansible/modules/network/aci/aci_switch_policy_vpc_protection_group.py
+2019-04-01 17:04:31,806 p=24607 u=steve |  ok: [apic27-sim-2-a.intranet.local] => {
+    "changed": false, 
+    "current": [], 
+    "invocation": {
+        "module_args": {
+            "certificate_name": null, 
+            "host": "apic27-sim-2-a.intranet.local", 
+            "output_level": "normal", 
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER", 
+            "port": null, 
+            "private_key": null, 
+            "protection_group": null, 
+            "protection_group_id": null, 
+            "protocol": "https", 
+            "state": "query", 
+            "switch_1_id": null, 
+            "switch_2_id": null, 
+            "timeout": 30, 
+            "use_proxy": true, 
+            "use_ssl": true, 
+            "username": "admin", 
+            "validate_certs": false, 
+            "vpc_domain_policy": null
+        }
+    }
+}
+2019-04-01 17:04:31,808 p=24607 u=steve |  META: ran handlers
+2019-04-01 17:04:31,808 p=24607 u=steve |  META: ran handlers
+2019-04-01 17:04:31,812 p=24607 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:04:31,817 p=24607 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
+2019-04-01 17:04:58,476 p=24639 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:04:58,485 p=24639 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:04:58,949 p=24639 u=steve |  ok: [apic27-sim-2-a.intranet.local]
+2019-04-01 17:04:58,951 p=24639 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:04:58,952 p=24639 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
+2019-04-01 17:06:24,286 p=24709 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:06:24,296 p=24709 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:06:24,696 p=24709 u=steve |  fatal: [apic27-sim-2-a.intranet.local]: FAILED! => {"changed": false, "error": {"code": "401", "text": "Username or password is incorrect - FAILED local authentication"}, "msg": "Authentication failed: 401 Username or password is incorrect - FAILED local authentication"}
+2019-04-01 17:06:24,699 p=24709 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-01 17:06:24,700 p=24709 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:06:24,700 p=24709 u=steve |  apic27-sim-2-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-01 17:07:46,051 p=24782 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:07:46,060 p=24782 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:07:46,521 p=24782 u=steve |  ok: [apic27-sim-2-a.intranet.local]
+2019-04-01 17:07:46,525 p=24782 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:07:46,526 p=24782 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
+2019-04-01 17:08:17,342 p=24829 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************
+2019-04-01 17:08:17,360 p=24829 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************
+2019-04-01 17:08:17,809 p=24829 u=steve |  ok: [apic27-sim-2-a.intranet.local]
+2019-04-01 17:08:17,812 p=24829 u=steve |  PLAY RECAP ********************************************************************************************************************
+2019-04-01 17:08:17,812 p=24829 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
