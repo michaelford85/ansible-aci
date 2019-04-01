@@ -1,0 +1,5 @@
+---
+
+#Acceptable values are: ada_prod, ada_preprod, southbelt_prod, southbelt_preprod, aits_prod, aits_preprod
+#choice would determine the {{apic}} variable which would actually be shorthand for "https://{{inventory_host}}/api"
+apic: ada_prod
