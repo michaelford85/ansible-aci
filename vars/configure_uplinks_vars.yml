@@ -8,5 +8,5 @@ apic: ada_prod
 use_case: vmkernel_bundled
 
 #APIC Login Credentials
-aci_username: {{ vaulted_aci_username }}
-aci_password: {{ vaulted_aci_password }}
+aci_username: "{{ vaulted_aci_username }}"
+aci_password: "{{ vaulted_aci_password }}"
