@@ -345,3 +345,5 @@ WARNING: The below traceback may *not* be related to the actual failure.
 2019-04-01 17:08:17,809 p=24829 u=steve |  ok: [apic27-sim-2-a.intranet.local]
 2019-04-01 17:08:17,812 p=24829 u=steve |  PLAY RECAP ********************************************************************************************************************
 2019-04-01 17:08:17,812 p=24829 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
+2019-04-03 14:17:43,432 p=23046 u=mford |   [ERROR]: User interrupted execution
+

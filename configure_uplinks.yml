@@ -1,6 +1,6 @@
 ---
 - name: Configure uplinks from ESXi host
-  hosts: apics
+  hosts: "{{ apic }}"
   connection: local
   gather_facts: no
   vars_files:
@@ -19,6 +19,7 @@
         validate_certs: no
         state: query
       register: leaf_switch_pair_result
+      when: inventory_hostname == apic
 
     - name: Print Query Results
       debug:
