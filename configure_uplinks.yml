@@ -36,7 +36,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         method: get
-        path: /api/node/class/fabricNodePEp.json
+        path: /api/node/class/fabricNode.json
         validate_certs: no
       register: all_nodes
 
