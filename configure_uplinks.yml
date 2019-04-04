@@ -24,19 +24,13 @@
       debug:
         var: leaf_switch_pair_result
 
-    # need to search
-    # leaf_switch_pair_result.current[]
-    # for all the fabricExplicitGEp objects.
-
-    # for each one
-
     - name: Get a list of all the leaf switch nodes
       aci_rest:
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         method: get
-        path: /api/node/class/fabricNode.json
+        path: /api/node/class/fabricNode.json?query-target-filter=and(eq(fabricNode.role,"leaf"))
         validate_certs: no
       register: all_nodes
 

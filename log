@@ -347,3 +347,185 @@ WARNING: The below traceback may *not* be related to the actual failure.
 2019-04-01 17:08:17,812 p=24829 u=steve |  apic27-sim-2-a.intranet.local : ok=1    changed=0    unreachable=0    failed=0   
 2019-04-03 14:17:43,432 p=23046 u=mford |   [ERROR]: User interrupted execution
 
+2019-04-04 15:20:39,758 p=29123 u=steve |  ERROR! You must specify a playbook file to run
+2019-04-04 15:21:02,224 p=29135 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************************************
+2019-04-04 15:21:02,243 p=29135 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************************************
+2019-04-04 15:21:07,889 p=29135 u=steve |  fatal: [apic27-sim-1-a.intranet.local]: FAILED! => {"changed": false, "msg": "Connection failed for https://apic27-sim-1-a.intranet.local/api/aaaLogin.json. Request failed: <urlopen error [Errno -2] Name or service not known>"}
+2019-04-04 15:21:07,891 p=29135 u=steve |  	to retry, use: --limit @/home/steve/ansible-aci/configure_uplinks.retry
+
+2019-04-04 15:21:07,892 p=29135 u=steve |  PLAY RECAP ********************************************************************************************************************************************
+2019-04-04 15:21:07,892 p=29135 u=steve |  apic27-sim-1-a.intranet.local : ok=0    changed=0    unreachable=0    failed=1   
+2019-04-04 15:22:25,896 p=29238 u=steve |  PLAY [Configure uplinks from ESXi host] ***************************************************************************************************************
+2019-04-04 15:22:25,905 p=29238 u=steve |  TASK [Get available leaf switch pairs] ****************************************************************************************************************
+2019-04-04 15:22:26,554 p=29238 u=steve |  ok: [apic27-sim-2-a.intranet.local]
+2019-04-04 15:22:26,563 p=29238 u=steve |  TASK [Print Query Results] ****************************************************************************************************************************
+2019-04-04 15:22:26,625 p=29238 u=steve |  ok: [apic27-sim-2-a.intranet.local] => {
+    "leaf_switch_pair_result": {
+        "changed": false, 
+        "current": [
+            {
+                "fabricExplicitGEp": {
+                    "attributes": {
+                        "annotation": "", 
+                        "childAction": "", 
+                        "configQual": "", 
+                        "configSt": "deployed", 
+                        "dn": "uni/fabric/protpol/expgep-201_202", 
+                        "extMngdBy": "", 
+                        "id": "201", 
+                        "lcOwn": "local", 
+                        "modTs": "2019-04-03T13:55:30.804+00:00", 
+                        "monPolDn": "uni/fabric/monfab-default", 
+                        "name": "201_202", 
+                        "status": "", 
+                        "uid": "15374", 
+                        "virtualIp": "10.0.16.64/32"
+                    }, 
+                    "children": [
+                        {
+                            "fabricNodePEp": {
+                                "attributes": {
+                                    "annotation": "", 
+                                    "childAction": "", 
+                                    "descr": "", 
+                                    "extMngdBy": "", 
+                                    "id": "202", 
+                                    "lcOwn": "local", 
+                                    "mgmtIp": "0.0.0.0", 
+                                    "modTs": "2019-04-03T13:52:50.576+00:00", 
+                                    "monPolDn": "uni/fabric/monfab-default", 
+                                    "name": "", 
+                                    "nameAlias": "", 
+                                    "peerIp": "10.0.24.67/32", 
+                                    "podId": "1", 
+                                    "rn": "nodepep-202", 
+                                    "status": "", 
+                                    "uid": "15374"
+                                }
+                            }
+                        }, 
+                        {
+                            "fabricNodePEp": {
+                                "attributes": {
+                                    "annotation": "", 
+                                    "childAction": "", 
+                                    "descr": "", 
+                                    "extMngdBy": "", 
+                                    "id": "201", 
+                                    "lcOwn": "local", 
+                                    "mgmtIp": "0.0.0.0", 
+                                    "modTs": "2019-04-03T13:52:50.576+00:00", 
+                                    "monPolDn": "uni/fabric/monfab-default", 
+                                    "name": "", 
+                                    "nameAlias": "", 
+                                    "peerIp": "10.0.24.64/32", 
+                                    "podId": "1", 
+                                    "rn": "nodepep-201", 
+                                    "status": "", 
+                                    "uid": "15374"
+                                }
+                            }
+                        }, 
+                        {
+                            "fabricRsVpcInstPol": {
+                                "attributes": {
+                                    "annotation": "", 
+                                    "childAction": "", 
+                                    "extMngdBy": "", 
+                                    "forceResolve": "yes", 
+                                    "lcOwn": "local", 
+                                    "modTs": "2019-04-03T13:52:50.576+00:00", 
+                                    "monPolDn": "uni/fabric/monfab-default", 
+                                    "rType": "mo", 
+                                    "rn": "rsvpcInstPol", 
+                                    "state": "formed", 
+                                    "stateQual": "default-target", 
+                                    "status": "", 
+                                    "tCl": "vpcInstPol", 
+                                    "tContextDn": "", 
+                                    "tDn": "uni/fabric/vpcInst-default", 
+                                    "tRn": "vpcInst-default", 
+                                    "tType": "name", 
+                                    "tnVpcInstPolName": "", 
+                                    "uid": "0"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ], 
+        "failed": false
+    }
+}
+2019-04-04 15:22:26,630 p=29238 u=steve |  TASK [Get a list of all the leaf switch nodes] ********************************************************************************************************
+2019-04-04 15:22:27,082 p=29238 u=steve |  ok: [apic27-sim-2-a.intranet.local]
+2019-04-04 15:22:27,087 p=29238 u=steve |  TASK [Print node list results] ************************************************************************************************************************
+2019-04-04 15:22:27,143 p=29238 u=steve |  ok: [apic27-sim-2-a.intranet.local] => {
+    "all_nodes": {
+        "changed": false, 
+        "failed": false, 
+        "imdata": [
+            {
+                "fabricNode": {
+                    "attributes": {
+                        "adSt": "on", 
+                        "annotation": "", 
+                        "childAction": "", 
+                        "delayedHeartbeat": "no", 
+                        "dn": "topology/pod-1/node-201", 
+                        "extMngdBy": "", 
+                        "fabricSt": "active", 
+                        "id": "201", 
+                        "lastStateModTs": "2019-03-15T13:43:38.801+00:00", 
+                        "lcOwn": "local", 
+                        "modTs": "2019-03-15T13:44:55.506+00:00", 
+                        "model": "N9K-C9396PX", 
+                        "monPolDn": "uni/fabric/monfab-default", 
+                        "name": "leaf1", 
+                        "nameAlias": "", 
+                        "nodeType": "unspecified", 
+                        "role": "leaf", 
+                        "serial": "TEP-1-101", 
+                        "status": "", 
+                        "uid": "0", 
+                        "vendor": "Cisco Systems, Inc", 
+                        "version": ""
+                    }
+                }
+            }, 
+            {
+                "fabricNode": {
+                    "attributes": {
+                        "adSt": "on", 
+                        "annotation": "", 
+                        "childAction": "", 
+                        "delayedHeartbeat": "no", 
+                        "dn": "topology/pod-1/node-202", 
+                        "extMngdBy": "", 
+                        "fabricSt": "active", 
+                        "id": "202", 
+                        "lastStateModTs": "2019-03-15T13:46:29.744+00:00", 
+                        "lcOwn": "local", 
+                        "modTs": "2019-03-15T13:46:39.839+00:00", 
+                        "model": "N9K-C9396PX", 
+                        "monPolDn": "uni/fabric/monfab-default", 
+                        "name": "leaf2", 
+                        "nameAlias": "", 
+                        "nodeType": "unspecified", 
+                        "role": "leaf", 
+                        "serial": "TEP-1-102", 
+                        "status": "", 
+                        "uid": "0", 
+                        "vendor": "Cisco Systems, Inc", 
+                        "version": ""
+                    }
+                }
+            }
+        ], 
+        "status": -1, 
+        "totalCount": 2
+    }
+}
+2019-04-04 15:22:27,145 p=29238 u=steve |  PLAY RECAP ********************************************************************************************************************************************
+2019-04-04 15:22:27,145 p=29238 u=steve |  apic27-sim-2-a.intranet.local : ok=4    changed=0    unreachable=0    failed=0   
