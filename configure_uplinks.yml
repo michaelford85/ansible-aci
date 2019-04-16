@@ -57,8 +57,8 @@
     #infraPortBlk.descr is the value we care about here
     - name: Print Leaf Interface Profiles
       debug:
-        msg: "{{ item }}"
-      loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.descr') }}"
+        msg: "Interface status: {{ item }}"
+      loop: "{{leaf_interface_profile_result | json_query('imdata.infraPortBlk[*].descr') }}"
 
 
 
