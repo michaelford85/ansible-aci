@@ -55,51 +55,51 @@
         var: leaf_interface_profile_result
 
     #infraPortBlk.descr is the value we care about here
-    # - name: Print Leaf Interface Profiles
+    - name: Print Open Port Names
+      debug:
+        msg: "Interface name: {{ item }}"
+      loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.attributes.dn') }}"
+
+
+
+
+    # - name: Query for all ports on the switch pairs
+    #  #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+    #   aci_rest:
+    #     host: "{{ inventory_hostname }}"
+    #     username: "{{ aci_username }}"
+    #     password: "{{ aci_password }}"
+    #     # path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&subscription=yes
+    #     path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))
+    #     method: get
+    #     output_level: debug
+    #     validate_certs: no
+    #   register: open_port_result
+    #
+    # - name: Print open ports
     #   debug:
-    #     msg: "Interface status: {{ item }}"
-    #   loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.descr') }}"
-
-
-
-
-    - name: Query for all ports on the switch pairs
-     #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        # path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&subscription=yes
-        path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: open_port_result
-
-    - name: Print open ports
-      debug:
-        var: open_port_result
-
-    - name: Query port details
-      aci_access_port_to_interface_policy_leaf_profile:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        leaf_interface_profile: 201-IfProf
-        leaf_port_blk: Interfaces
-        access_port_selector: "1:2-IfSel"
-        from_port: 1
-        to_port: 48
-        state: query
-        validate_certs: no
-      register: port_details_result
-
-    - name: Print out Port details
-      debug:
-        var: port_details_result
-
-    # TODO
-    #- name: Choose open ports to Configure
+    #     var: open_port_result
+    #
+    # - name: Query port details
+    #   aci_access_port_to_interface_policy_leaf_profile:
+    #     host: "{{ inventory_hostname }}"
+    #     username: "{{ aci_username }}"
+    #     password: "{{ aci_password }}"
+    #     leaf_interface_profile: 201-IfProf
+    #     leaf_port_blk: Interfaces
+    #     access_port_selector: "1:2-IfSel"
+    #     from_port: 1
+    #     to_port: 48
+    #     state: query
+    #     validate_certs: no
+    #   register: port_details_result
+    #
+    # - name: Print out Port details
+    #   debug:
+    #     var: port_details_result
+    #
+    # # TODO
+    # #- name: Choose open ports to Configure
 
 
 
