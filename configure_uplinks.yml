@@ -29,7 +29,7 @@
 
     - name: Print leaf switch node short name
       debug:
-        var: {{ item.split("-")[0] | lower }}
+        msg: "{{ item.split("-")[0] | lower }}"
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
       #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
