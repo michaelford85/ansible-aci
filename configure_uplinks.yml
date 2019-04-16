@@ -44,7 +44,7 @@
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: https://apic27-sim-2-a.intranet.local/api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&subscription=yes
+        path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&subscription=yes
         method: get
         validate_certs: no
       register: open_port_result
