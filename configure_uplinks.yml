@@ -60,7 +60,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         method: get
-        path: /api/node/mo/uni/infra/accportprof-201-IfProf.json
+        path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=subtree&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&target-subtree-class=infraPortBlk,infraSubPortBlk,infraRsAccBaseGrp&query-target=subtree&subscription=yes
         validate_certs: no
       register: open_port_result
 
