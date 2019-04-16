@@ -20,42 +20,54 @@
         state: query
       register: leaf_switch_pair_result
 
-    - name: Print Query Results
+    - name: Print leaf switch pairs
       debug:
         var: leaf_switch_pair_result
 
-    - name: Get a list of all the leaf switch nodes
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        method: get
-        path: /api/node/class/fabricNode.json?query-target-filter=and(eq(fabricNode.role,"leaf"))
-        validate_certs: no
-      register: all_nodes
+    # - name: Get a list of all the leaf switch nodes
+    #   aci_rest:
+    #     host: "{{ inventory_hostname }}"
+    #     username: "{{ aci_username }}"
+    #     password: "{{ aci_password }}"
+    #     method: get
+    #     path: /api/node/class/fabricNode.json?query-target-filter=and(eq(fabricNode.role,"leaf"))
+    #     validate_certs: no
+    #   register: all_nodes
+    #
+    # - name: Print leaf switch nodes
+    #   debug:
+    #     var: all_nodes
 
-    - name: Print node list results
-      debug: 
-        var: all_nodes
-#
-#    - name: Get a list of open ports on the switch pairs
-#      #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-#      aci_access_port_to_interface_policy_leaf_profile:
-#        host: "{{ inventory_hostname }}"
-#        username: "{{ aci_username }}"
-#        password: "{{ aci_password }}"
-#        leaf_interface_profile:
-#        access_port_selector:
-#        leaf_port_blk:
-#        leaf_port_blk_description: open
-#        from_port:
-#        to_port:
-#        state: query
-#      register: open_port_result
-#
-#    - name: Print Query Results
-#      debug:
-#        var: open_port_result
-#
+    # - name: Get a list of open ports on the switch pairs
+    #  #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+    #  aci_access_port_to_interface_policy_leaf_profile:
+    #    host: "{{ inventory_hostname }}"
+    #    username: "{{ aci_username }}"
+    #    password: "{{ aci_password }}"
+    #    leaf_interface_profile:
+    #    access_port_selector:
+    #    leaf_port_blk:
+    #    leaf_port_blk_description: open
+    #    from_port:
+    #    to_port:
+    #    state: query
+    #  register: open_port_result
+
+    - name: Get a list of open ports on the switch pairs
+     #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+     aci_rest:
+       host: "{{ inventory_hostname }}"
+       username: "{{ aci_username }}"
+       password: "{{ aci_password }}"
+       method: get
+       path: /api/node/mo/uni/infra/accportprof-201-IfProf.json
+     register: open_port_result
+
+     https://apic27-sim-2-a.intranet.local/api/node/mo/uni/infra/accportprof-201-IfProf.json
+
+   - name: Print open ports
+     debug:
+       var: open_port_result
+
     # TODO
     #- name: Choose open ports to Configure
