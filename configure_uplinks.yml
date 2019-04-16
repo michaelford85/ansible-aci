@@ -48,16 +48,16 @@
         method: get
         # output_level: debug
         validate_certs: no
-      register: leaf_interface_profile_result
+      register: leaf_interface_profile_result.imdata
 
     - name: Print Leaf Interface Result
       debug:
         var: leaf_interface_profile_result
 
-    - name: Print Leaf Interface Profiles
-      debug:
-        var: leaf_interface_profile_result.imdata
-      # loop: "{{leaf_interface_profile_result.imdata}}"
+    # - name: Print Leaf Interface Profiles
+    #   debug:
+    #     var: leaf_interface_profile_result.imdata
+    #   # loop: "{{leaf_interface_profile_result.imdata}}"
 
 
 
