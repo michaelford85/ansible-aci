@@ -60,6 +60,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         leaf_interface_profile: 201-IfProf
+        output_level: info
         state: query
         validate_certs: no
       register: open_port_result
