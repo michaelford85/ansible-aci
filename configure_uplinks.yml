@@ -58,7 +58,7 @@
     - name: Print Leaf Interface Profiles
       debug:
         msg: "Interface status: {{ item }}"
-      loop: "{{leaf_interface_profile_result | json_query('imdata.infraPortBlk[*].descr') }}"
+      loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.descr') }}"
 
 
 
