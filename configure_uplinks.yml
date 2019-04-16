@@ -46,7 +46,7 @@
         password: "{{ aci_password }}"
         path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
         method: get
-        output_level: info
+        output_level: debug
         validate_certs: no
       register: leaf_interface_profile_result
 
