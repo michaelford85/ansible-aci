@@ -38,8 +38,8 @@
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-        # path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, ""{{ item [:3] }}""),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+        # path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, "{{ item [:3] }}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
         method: get
         output_level: debug
         validate_certs: no
@@ -47,15 +47,15 @@
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
-    - name: Print Leaf Interface Result
-      debug:
-        var: leaf_interface_profile_result
+    # - name: Print Leaf Interface Result
+    #   debug:
+    #     var: leaf_interface_profile_result
 
     #infraPortBlk.descr is the value we care about here
-    - name: Print Open Port Names
-      debug:
-        msg: "Interface name: {{ item }}"
-      loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.attributes.dn') }}"
+    # - name: Print Open Port Names
+    #   debug:
+    #     msg: "Interface name: {{ item }}"
+    #   loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.attributes.dn') }}"
 
 
 
