@@ -55,17 +55,17 @@
 
     - name: Get a list of open ports on the switch pairs
      #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-     aci_rest:
-       host: "{{ inventory_hostname }}"
-       username: "{{ aci_username }}"
-       password: "{{ aci_password }}"
-       method: get
-       path: /api/node/mo/uni/infra/accportprof-201-IfProf.json
-     register: open_port_result
+      aci_rest:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        method: get
+        path: /api/node/mo/uni/infra/accportprof-201-IfProf.json
+      register: open_port_result
 
-   - name: Print open ports
-     debug:
-       var: open_port_result
+    - name: Print open ports
+      debug:
+        var: open_port_result
 
     # TODO
     #- name: Choose open ports to Configure
