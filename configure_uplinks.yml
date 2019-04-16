@@ -32,18 +32,20 @@
         msg: "{{ item [:3] }}"
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
+    - block:
       #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-    - name: Query for all open ports
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        # path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, "{{ item [:3] }}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: leaf_interface_profile_result
+      - name: Query for all open ports
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          # path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+          path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, "{{ item [:3] }}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+          method: get
+          output_level: debug
+          validate_certs: no
+        register: leaf_interface_profile_result
+
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
