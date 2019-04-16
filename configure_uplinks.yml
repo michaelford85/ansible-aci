@@ -38,13 +38,13 @@
     #   debug:
     #     var: all_nodes
 
-    #url: https://apic27-sim-2-a.intranet.local/api/node/mo/uni/infra.json?query-target=subtree&target-subtree-class=infraAccPortP&query-target-filter=not(wcard(polUni.dn, "__ui_"))&target-subtree-class=infraFexP,infraHPortS,infraPortBlk,infraSubPortBlk&query-target=subtree
-    - name: Query for all Leaf Interface Profiles
+    #url: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+    - name: Query for all open ports
       aci_rest:
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: /api/node/mo/uni/infra.json?query-target=subtree&target-subtree-class=infraAccPortP&query-target-filter=not(wcard(polUni.dn, "__ui_"))&target-subtree-class=infraFexP,infraHPortS,infraPortBlk,infraSubPortBlk&query-target=subtree
+        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
         method: get
         # output_level: debug
         validate_certs: no
@@ -55,10 +55,10 @@
         var: leaf_interface_profile_result
 
     #infraPortBlk.descr is the value we care about here
-    - name: Print Leaf Interface Profiles
-      debug:
-        msg: "Interface status: {{ item }}"
-      loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.descr') }}"
+    # - name: Print Leaf Interface Profiles
+    #   debug:
+    #     msg: "Interface status: {{ item }}"
+    #   loop: "{{leaf_interface_profile_result | json_query('imdata[*].infraPortBlk.descr') }}"
 
 
 
@@ -100,3 +100,9 @@
 
     # TODO
     #- name: Choose open ports to Configure
+
+
+
+
+
+# {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
