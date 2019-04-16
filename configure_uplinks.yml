@@ -73,6 +73,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         leaf_interface_profile: 201-IfProf
+        leaf_port_blk: Interfaces
         access_port_selector: "1:2-IfSel"
         from_port: 1
         to_port: 48
