@@ -24,19 +24,19 @@
       debug:
         var: leaf_switch_pair_result
 
-    # - name: Get a list of all the leaf switch nodes
-    #   aci_rest:
-    #     host: "{{ inventory_hostname }}"
-    #     username: "{{ aci_username }}"
-    #     password: "{{ aci_password }}"
-    #     method: get
-    #     path: /api/node/class/fabricNode.json?query-target-filter=and(eq(fabricNode.role,"leaf"))
-    #     validate_certs: no
-    #   register: all_nodes
-    #
-    # - name: Print leaf switch nodes
-    #   debug:
-    #     var: all_nodes
+    - name: Get a list of all the leaf switch nodes
+      aci_rest:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        method: get
+        path: /api/node/class/fabricNode.json?query-target-filter=and(eq(fabricNode.role,"leaf"))
+        validate_certs: no
+      register: all_nodes
+
+    - name: Print leaf switch nodes
+      debug:
+        var: all_nodes
 
     - name: Get a list of open ports on the switch pairs
      #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
@@ -47,11 +47,12 @@
         # path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))&subscription=yes
         path: /api/node/mo/uni/infra/accportprof-201-IfProf.json?query-target=children&target-subtree-class=infraHPortS&query-target-filter=not(wcard(polUni.dn, "__ui_"))
         method: get
+        output_level: debug
         validate_certs: no
       register: open_port_result
 
+    ## This module does not print out every port the way aci_rest does
     # - name: Get a list of open ports on the switch pairs
-    #  #GET {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
     #   aci_interface_policy_leaf_profile:
     #     host: "{{ inventory_hostname }}"
     #     username: "{{ aci_username }}"
