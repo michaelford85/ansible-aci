@@ -56,8 +56,8 @@
 
     - name: Print Leaf Interface Profiles
       debug:
-        var: "leaf_interface_profile_result.{{item}}"
-      loop: "{{leaf_interface_profile_result.imdata}}"
+        var: leaf_interface_profile_result.imdata
+      # loop: "{{leaf_interface_profile_result.imdata}}"
 
 
 
