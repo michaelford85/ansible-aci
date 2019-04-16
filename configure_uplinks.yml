@@ -61,6 +61,7 @@
         password: "{{ aci_password }}"
         method: get
         path: /api/node/mo/uni/infra/accportprof-201-IfProf.json
+        validate_certs: no
       register: open_port_result
 
     - name: Print open ports
