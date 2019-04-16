@@ -67,5 +67,21 @@
       debug:
         var: open_port_result
 
+    - name: Query port details
+      aci_access_port_to_interface_policy_leaf_profile:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        leaf_interface_profile: 201-IfProf
+        access_port_selector: "1:2-IfSel"
+        from_port: 1
+        to_port: 48
+        validate_certs: no
+      register: port_details_result
+
+    - name: Print out Port details
+      debug:
+        var: port_details_result
+
     # TODO
     #- name: Choose open ports to Configure
