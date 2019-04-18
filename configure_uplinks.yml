@@ -22,9 +22,9 @@
         validate_certs: no
       register: leaf_switches_result
 
-    # - name: Print leaf switch nodes
-    #   debug:
-    #     var: leaf_switches_result
+    - name: Print leaf switch nodes
+      debug:
+        var: leaf_switches_result
 
 
     # TODO: Comment this out when no longer needed
@@ -35,17 +35,21 @@
 
     - name: Delete any existing open port variable file
       file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
         state: absent
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
     - name: Create variable file to contain open ports
       file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
-        state: touch
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        content: |
+          ---
+          "{{ item [:3] }}_open_ports:"
+
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
       #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+      #NOTE: For each switch, this task appends the open port objects to leaf_interface_profile_result
     - name: Query for all open ports
       aci_rest:
         host: "{{ inventory_hostname }}"
@@ -64,7 +68,7 @@
       debug:
         var: leaf_interface_profile_result
 
-    # - name: populate open port txt files
+    # - name: populate open port txt file
     #   copy:
     #     content: "{{ leaf_interface_profile_result }}"
     #     dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
