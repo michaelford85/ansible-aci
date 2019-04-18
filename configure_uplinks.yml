@@ -51,7 +51,7 @@
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,\"202\"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
+        path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,\"202\"),eq(infraPortBlk.descr, \"open\"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
         # path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, {{ item [:3] }}),eq(infraPortBlk.descr, 'open'))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
         method: get
         output_level: debug
