@@ -40,8 +40,8 @@
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
     - name: Create variable file to contain open ports
-      file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+      copy:
+        dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
         content: |
           ---
           "{{ item [:3] }}_open_ports:"
