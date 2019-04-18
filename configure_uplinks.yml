@@ -27,6 +27,7 @@
     #     var: leaf_switches_result
 
 
+    # TODO: Comment this out when no longer needed
     - name: Print leaf switch node short name
       debug:
         msg: "{{ item [:3] }}"
@@ -34,13 +35,13 @@
 
     - name: Delete any existing open port variable file
       file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
         state: absent
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
     - name: Create variable file to contain open ports
       file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
         state: touch
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
@@ -56,13 +57,19 @@
         output_level: debug
         validate_certs: no
       register: leaf_interface_profile_result
-
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
     - name: Print Leaf Interface Result
       debug:
         var: leaf_interface_profile_result
+
+    - name: populate variable files
+      copy:
+        content: "{{ leaf_interface_profile_result }}"
+        dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
+      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
+
 
 
 
