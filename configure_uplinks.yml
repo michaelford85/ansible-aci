@@ -51,8 +51,8 @@
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-        # path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, "{{ item [:3] }}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+        path: /api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,202),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+        # path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, {{ item [:3] }}),eq(infraPortBlk.descr, 'open'))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
         method: get
         output_level: debug
         validate_certs: no
@@ -64,11 +64,11 @@
       debug:
         var: leaf_interface_profile_result
 
-    - name: populate variable files
-      copy:
-        content: "{{ leaf_interface_profile_result }}"
-        dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
-      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
+    # - name: populate open port txt files
+    #   copy:
+    #     content: "{{ leaf_interface_profile_result }}"
+    #     dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
+    #   loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
 
