@@ -30,7 +30,7 @@
     # TODO: Comment this out when no longer needed
     - name: Print leaf switch node short name
       debug:
-        msg: "{{ item [:3] }}"
+        msg: "{{ item | regex_replace('[^0-9]+', '') }}"
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
     - name: Delete any existing open port variable file
