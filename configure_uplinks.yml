@@ -48,9 +48,9 @@
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
-    # - name: Print Leaf Interface Result
-    #   debug:
-    #     var: leaf_interface_profile_result
+    - name: Print Leaf Interface Result
+      debug:
+        var: leaf_interface_profile_result
 
     #infraPortBlk.descr is the value we care about here
     # - name: Print Open Port Names
