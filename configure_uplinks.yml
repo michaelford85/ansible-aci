@@ -32,6 +32,18 @@
         msg: "{{ item [:3] }}"
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
+    - name: Delete any existing open port variable file
+      file:
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        state: absent
+      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
+
+    - name: Create variable file to contain open ports
+      file:
+        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        state: touch
+      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
+
       #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
     - name: Query for all open ports
       aci_rest:
@@ -51,6 +63,8 @@
     - name: Print Leaf Interface Result
       debug:
         var: leaf_interface_profile_result
+
+
 
     #infraPortBlk.descr is the value we care about here
     # - name: Print Open Port Names
