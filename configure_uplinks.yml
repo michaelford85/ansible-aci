@@ -68,7 +68,28 @@
       debug:
         var: leaf_interface_profile_result
 
-    # - name: populate open port txt file
+    - name: Break Open Port Query into separate files
+      copy:
+        content:
+        dest: "{{ playbook_dir }}/vars/{{ item.item | regex_replace('[^0-9]+', '') }}_open_ports.txt"
+      loop: "{{leaf_interface_profile_result | json_query('results[*].imdata') }}"
+
+    - name: Break Open Port Query into separate files
+      debug:
+        msg: "IMDATA: {{ item.item | regex_replace('[^0-9]+', '') }}_open_ports.txt"
+      loop: "{{leaf_interface_profile_result | json_query('results[*].imdata') }}"
+
+
+     # - name: Populate open port yml files
+     #   lineinfile:
+     #    path: "{{ playbook_dir }}/202_open_ports.yml"
+     #    line: "  - {{ item | regex_replace('[^0-9]+', '')}}"
+     #   when: item is search("fromPort")
+     #   with_lines: "cat {{ playbook_dir }}/202_open_ports.txt"
+
+
+
+
     #   copy:
     #     content: "{{ leaf_interface_profile_result }}"
     #     dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.txt"
