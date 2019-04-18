@@ -35,16 +35,16 @@
 
     - name: Delete any existing open port variable file
       file:
-        path: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        path: "{{ playbook_dir }}/vars/{{ item | regex_replace('[^0-9]+', '') }}_open_ports.yml"
         state: absent
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
     - name: Create variable file to contain open ports
       copy:
-        dest: "{{ playbook_dir }}/vars/{{ item [:3] }}_open_ports.yml"
+        dest: "{{ playbook_dir }}/vars/{{ item | regex_replace('[^0-9]+', '') }}_open_ports.yml"
         content: |
           ---
-          "{{ item [:3] }}_open_ports:"
+          "{{ item | regex_replace('[^0-9]+', '') }}_open_ports:"
 
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
@@ -56,7 +56,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         # path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,\"202\"),eq(infraPortBlk.descr, \"open\"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
-        path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, \"{{ item [:3] }}\"),eq(infraPortBlk.descr, \"open\"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
+        path: "/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn, \"{{ item | regex_replace('[^0-9]+', '') }}\"),eq(infraPortBlk.descr, \"open\"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk"
         method: get
         output_level: debug
         validate_certs: no
