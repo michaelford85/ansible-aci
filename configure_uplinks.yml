@@ -94,7 +94,7 @@
 
     - name: Delete open_ports.txt
       file:
-        ./open_ports.txt
+        path: ./open_ports.txt
         state: absent
 
 
