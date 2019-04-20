@@ -73,6 +73,8 @@
         content: "{{ leaf_interface_profile_result }}"
         dest: open_ports.txt
 
+    - debug: msg="the value of foo.txt is {{lookup('file', './open_ports.txt') }}"
+
     - name: Get open ports file lines
       shell: "cat ./open_ports.txt"
       register: port_file_lines
