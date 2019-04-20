@@ -1,6 +1,6 @@
 ---
 open_ports:
-{% for entry in leaf_interface_profile_result.stdout_lines %}
+{% for entry in leaf_interface_profile_result.results %}
 {% if entry is search("accportprof") %}
   - switch: {{entry | regex_search('prof-(\\d+)')}}
     port: {{entry | regex_search('(\\d+)-IfSel')}}
