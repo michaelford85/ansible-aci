@@ -64,7 +64,7 @@
 
     - name: Print Leaf Interface Result
       debug:
-        var: leaf_interface_profile_result.results
+        var: leaf_interface_profile_result
 
     - name: Copy leaf interface profile results to file
       copy:
