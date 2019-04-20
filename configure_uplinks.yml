@@ -79,7 +79,7 @@
 
     - name: PRINT
       debug:
-        msg: "{{item}}"
+        msg: ---"{{item}}"
       loop: "{{ port_file_lines.stdout_lines}}"
 
     - name: Populate Variable file
