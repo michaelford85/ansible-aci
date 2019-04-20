@@ -63,11 +63,6 @@
       register: leaf_interface_profile_result
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
-
-    - name: Print Leaf Interface Result
-      debug:
-        var: leaf_interface_profile_result.stdout_lines
-
     - name: Copy leaf interface profile results to file
       copy:
         content: "{{ leaf_interface_profile_result }}"
