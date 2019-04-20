@@ -2,7 +2,7 @@
 open_ports:
 {% for entry in port_file_lines.stdout_lines %}
 {% if entry is search("accportprof") %}
-  - switch: {{entry | regex_search('(\\d+)')}}
-    port: {{entry | regex_search(':(\\d+)')}}
+  - switch: {{entry | regex_search('prof-(\\d+)')}}
+    port: {{entry | regex_search(':(\\d+)-IfSel')}}
 {% endif %}
 {% endfor %}
