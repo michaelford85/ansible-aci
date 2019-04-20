@@ -24,9 +24,9 @@
         validate_certs: no
       register: leaf_switches_result
 
-    - name: Print leaf switch nodes
-      debug:
-        var: leaf_switches_result
+    # - name: Print leaf switch nodes
+    #   debug:
+    #     var: leaf_switches_result
 
     - name: Set Leaf Switches fact
       set_fact:
@@ -47,16 +47,6 @@
       file:
         path: "{{ playbook_dir }}/vars/open_ports.yml"
         state: absent
-      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
-
-    - name: Create variable file to contain open ports
-      copy:
-        dest: "{{ playbook_dir }}/vars/{{ item | regex_replace('[^0-9]+', '') }}_open_ports.yml"
-        content: |
-          ---
-          "{{ item | regex_replace('[^0-9]+', '') }}_open_ports:"
-
-      loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
       #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
       #NOTE: For each switch, this task appends the open port objects to leaf_interface_profile_result
@@ -78,16 +68,34 @@
       debug:
         var: leaf_interface_profile_result
 
-    - name: Break Open Port Query into separate files
+    - name: Copy leaf interface profile results to file
       copy:
-        content:
-        dest: "{{ playbook_dir }}/vars/{{ item.item | regex_replace('[^0-9]+', '') }}_open_ports.txt"
-      loop: "{{leaf_interface_profile_result | json_query('results[*].imdata[*]') }}"
+        content: "{{ leaf_interface_profile_result }}"
+        dest: open_ports.txt
 
-    - name: Break Open Port Query into separate files
-      debug:
-        msg: "IMDATA: {{ item.item | regex_replace('[^0-9]+', '') }}_open_ports.txt"
-      loop: "{{leaf_interface_profile_result | json_query('results[*].imdata') }}"
+    - name: Get open ports file lines
+      shell: "cat ./open_ports.txt"
+      register: port_file_lines
+
+    - name: Populate Variable file
+      template:
+        src: ./templates/open_ports.j2
+        dest: ./vars/open_ports.yml
+
+    - name: Remove unnecessary colons
+      replace:
+        regexp: 't: :'
+        replace: 't: '
+        backup: no
+        path: ./vars/open_ports.yml
+
+    - name: Confirm contents of open ports variable file
+      shell: ./vars/open_ports.yml
+
+    - name: Delete open_ports.txt
+      file:
+        ./open_ports.txt
+        state: absent
 
 
      # - name: Populate open port yml files
