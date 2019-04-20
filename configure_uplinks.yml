@@ -45,7 +45,7 @@
 
     - name: Delete any existing open port variable file
       file:
-        path: "{{ playbook_dir }}/vars/{{ item | regex_replace('[^0-9]+', '') }}_open_ports.yml"
+        path: "{{ playbook_dir }}/vars/open_ports.yml"
         state: absent
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
