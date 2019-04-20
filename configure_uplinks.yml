@@ -89,10 +89,17 @@
         src: ./templates/open_ports.j2
         dest: ./vars/open_ports.yml
 
-    - name: Remove unnecessary colons
+    - name: Remove unnecessary text for switch
       replace:
-        regexp: 't: :'
-        replace: 't: '
+        regexp: 'prof-'
+        replace: ''
+        backup: no
+        path: ./vars/open_ports.yml
+
+    - name: Remove unnecessary text for port
+      replace:
+        regexp: '-IfSel'
+        replace: ''
         backup: no
         path: ./vars/open_ports.yml
 
