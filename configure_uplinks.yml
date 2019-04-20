@@ -77,6 +77,11 @@
       shell: "cat ./open_ports.txt"
       register: port_file_lines
 
+    - name: PRINT
+      debug:
+        msg: "{{item}}"
+      loop: "{{ port_file_lines }}"
+
     - name: Populate Variable file
       template:
         src: ./templates/open_ports.j2
