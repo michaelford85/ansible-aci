@@ -80,7 +80,7 @@
     - name: PRINT
       debug:
         msg: "{{item}}"
-      loop: "{{ port_file_lines }}"
+      loop: "{{ port_file_lines.stdout_lines}}"
 
     - name: Populate Variable file
       template:
