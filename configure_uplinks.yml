@@ -89,8 +89,13 @@
         backup: no
         path: ./vars/open_ports.yml
 
-    - name: Confirm contents of open ports variable file
-      shell: ./vars/open_ports.yml
+    - name: Include new open variables files
+      include_vars:
+        file: ./vars/open_ports.yml
+
+    - name: confirm open port variable
+      debug:
+        var: open_ports
 
     - name: Delete open_ports.txt
       file:
