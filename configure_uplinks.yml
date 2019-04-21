@@ -172,7 +172,8 @@
 
     - name: Print all VMKernel Applications
       debug:
-        var: vmkernel_app_result
+        msg: "{{ item }}"
+      loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
 
     #The leaf_switches variable indicates what leaf switches are in the topology
     - name: Set vmkernel_apps fact
