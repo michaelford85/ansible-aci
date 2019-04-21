@@ -213,7 +213,7 @@
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,{{ap_name}}))&rsp-subtree=full"
           method: get
           output_level: debug
           validate_certs: no
@@ -228,7 +228,7 @@
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,{{ap_name}}))&rsp-subtree=full"
           method: get
           output_level: debug
           validate_certs: no
