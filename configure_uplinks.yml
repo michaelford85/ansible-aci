@@ -112,7 +112,7 @@
 #For this POC, we will simply choose the first available ports from the variable file
     - name: Delete any existing selected port variable file
       file:
-        path: "./vars/selected_ports_{{ item }}.yml"
+        path: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
         state: absent
       loop: "{{ leaf_switches }}"
 
@@ -124,7 +124,7 @@
 
     - name: Include selected_ports variable for processing
       include_vars:
-        file: "./vars/selected_ports_{{ item }}.yml"
+        file: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
       loop: "{{ leaf_switches }}"
 
     #NOTE: Strictly here to show we got the values we wanted
