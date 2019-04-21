@@ -1,0 +1,28 @@
+{
+  "infraHPortS": {
+    "attributes": {
+      "status": "modified"
+    },
+    "children": [
+      {
+        "infraPortBlk": {
+          "attributes": {
+            "descr": "{{server_name}} mgmt-vmotion-vsan",
+            "name": "block2",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      },
+      {
+        "infraRsAccBaseGrp": {
+          "attributes": {
+            "tDn": "uni/infra/funcprof/accportgrp-VmHost-Phys-IfPolGrp",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      }
+    ]
+  }
+}

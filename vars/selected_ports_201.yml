@@ -2,7 +2,3 @@
 selected_ports_201:
   - switch: 201
     port: 1
-    count: 0
-  - switch: 201
-    port: 3
-    count: 1

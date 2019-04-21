@@ -12,13 +12,14 @@
     selected_ports_201:
       - switch: 201
         port: 1
-      - switch: 201
-        port: 3
     selected_ports_202:
       - switch: 202
         port: 17
+    leaf_pair_selected_ports:
       - switch: 202
-        port: 18
+        port: 17
+      - switch: 201
+        port: 1
 
   tasks:
 
@@ -290,5 +291,27 @@
           var: policy_group_result
 
       when: use_case == "vmguest_bundled"
+
+
+#### 8) If 4.a (VmKernel port - trunked, unbundled) == true,
+#### Deploy the VmHost-Phys-IfPolGrp and update the description of the interface-selector on both nodes ( node_id[0-1])
+
+    - block:
+
+      # In the GUI, this creates a new PC/VPC Interface Policy Group under
+      # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
+      - name: Deploy the VmHost-Phys-IfPolGrp and update the description of the interface-selector on both nodes
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/accportprof-{{item.switch}}-IfProf/hports-1:{{item.port}}-IfSel-typ-range.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          src: ./vars/vmhost_phys_ifpolgrp.json
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      when: use_case == "vmkernel_bundled"
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk

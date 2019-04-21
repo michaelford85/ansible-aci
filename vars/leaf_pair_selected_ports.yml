@@ -1,0 +1,6 @@
+---
+leaf_pair_selected_ports:
+  - switch: 202
+    port: 17
+  - switch: 201
+    port: 1
