@@ -213,7 +213,7 @@
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,{{ap_name}}))&rsp-subtree=full"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
           method: get
           output_level: debug
           validate_certs: no
@@ -228,7 +228,7 @@
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,{{ap_name}}))&rsp-subtree=full"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
           method: get
           output_level: debug
           validate_certs: no
@@ -243,7 +243,7 @@
 
 #### 7.) If use-case is a port-channel bundle then create the appropriate virtual-port-channel policy-group ####
 
-#### 7.1.) If 4.b (VmKernel port - trunked, bundled) == true    Create new virtual-port-channel policy-group for the management vlans ####
+#### 7.1.) If 4.b (VmKernel port - trunked, bundled) == true, Create new virtual-port-channel policy-group for the management vlans ####
 
     - block:
 
@@ -267,28 +267,28 @@
 
       when: use_case == "vmkernel_bundled"
 
-#### 7.1.) If 4.d (VmGuest ports - bundled) == true Create new virtual-port-channel policy-group for the VM Guests ####
+#### 7.2) If 4.d (VmGuest ports - bundled) == true, Create new virtual-port-channel policy-group for the VM Guests ####
 
-    # - block:
-    #
-    #   # In the GUI, this creates a new PC/VPC Interface Policy Group under
-    #   # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
-    #   - name: Create new virtual-port-channel policy-group for the management vlans
-    #     aci_rest:
-    #       host: "{{ inventory_hostname }}"
-    #       username: "{{ aci_username }}"
-    #       password: "{{ aci_password }}"
-    #       path: "/api/node/mo/uni/infra/funcprof/accbundle-test_server.json"
-    #       method: post
-    #       output_level: debug
-    #       validate_certs: no
-    #       src: ./vars/vpc_policy_group.json
-    #     register: policy_group_result
-    #
-    #   - name: Confirm policy_group_result
-    #     debug:
-    #       var: policy_group_result
-    #
-    #   when: use_case == "vmguest_bundled"
+    - block:
+
+      # In the GUI, this creates a new PC/VPC Interface Policy Group under
+      # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
+      - name: Create new virtual-port-channel policy-group for the VM Guests
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/funcprof/accbundle-{{server_name}}Guests-VpcPolGrp.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          src: ./vars/vpc_policy_group.json
+        register: policy_group_result
+
+      - name: Confirm policy_group_result
+        debug:
+          var: policy_group_result
+
+      when: use_case == "vmguest_bundled"
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
