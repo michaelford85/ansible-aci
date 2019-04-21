@@ -158,83 +158,86 @@
 #### 6.) If 4.a or 4.b == true Need to get the 3 trunked vlans by having the user choose a ####
 #### VMKernel Application to assign the server to ####
 
+    - block:
       #endpoint: https://{{ inventory_hostname }}/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))
-    - name: Query for all VMKernel Applications
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        path: "/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))"
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: vmkernel_app_result
+      - name: Query for all VMKernel Applications
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))"
+          method: get
+          output_level: debug
+          validate_certs: no
+        register: vmkernel_app_result
 
-    # - name: Print all VMKernel Applications
-    #   debug:
-    #     msg: "{{ item }}"
-    #   loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
+      # - name: Print all VMKernel Applications
+      #   debug:
+      #     msg: "{{ item }}"
+      #   loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
 
-    #The leaf_switches variable indicates what leaf switches are in the topology
-    - name: Set vmkernel_apps fact
-      set_fact:
-        vmkernel_apps: "{{ vmkernel_apps }} + [ '{{ item}}' ]"
-      loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
+      #The leaf_switches variable indicates what leaf switches are in the topology
+      - name: Set vmkernel_apps fact
+        set_fact:
+          vmkernel_apps: "{{ vmkernel_apps }} + [ '{{ item}}' ]"
+        loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
 
-    - name: Confirm vmkernel_apps
-      debug:
-        var: vmkernel_apps
+      - name: Confirm vmkernel_apps
+        debug:
+          var: vmkernel_apps
 
-    #NOTE: In production, the ap_name variable will be selected by the operator in SNOW.
-    #For this POC, we will simply populate the ap_name with the first available app
-    - name: Set the selection of the VMKernel app
-      set_fact:
-        ap_name: "{{ vmkernel_apps[0] }}"
+      #NOTE: In production, the ap_name variable will be selected by the operator in SNOW.
+      #For this POC, we will simply populate the ap_name with the first available app
+      - name: Set the selection of the VMKernel app
+        set_fact:
+          ap_name: "{{ vmkernel_apps[0] }}"
 
 
-    - name: Obtain Management VLAN ID for "{{ ap_name }}"
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Management\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: mgmt_result
+      - name: Obtain Management VLAN ID for "{{ ap_name }}"
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Management\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+          method: get
+          output_level: debug
+          validate_certs: no
+        register: mgmt_result
 
-    - name: Confirm mgmt_result
-      debug:
-        var: mgmt_result
+      - name: Confirm mgmt_result
+        debug:
+          var: mgmt_result
 
-    - name: Obtain Vmotion VLAN ID for "{{ ap_name }}"
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: vmotion_result
+      - name: Obtain Vmotion VLAN ID for "{{ ap_name }}"
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+          method: get
+          output_level: debug
+          validate_certs: no
+        register: vmotion_result
 
-    - name: Confirm mgmt_result
-      debug:
-        var: vmotion_result
+      - name: Confirm mgmt_result
+        debug:
+          var: vmotion_result
 
-    - name: Obtain VSan VLAN ID for "{{ ap_name }}"
-      aci_rest:
-        host: "{{ inventory_hostname }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
-        method: get
-        output_level: debug
-        validate_certs: no
-      register: vsan_result
+      - name: Obtain VSan VLAN ID for "{{ ap_name }}"
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+          method: get
+          output_level: debug
+          validate_certs: no
+        register: vsan_result
 
-    - name: Confirm mgmt_result
-      debug:
-        var: vsan_result
+      - name: Confirm mgmt_result
+        debug:
+          var: vsan_result
+
+      when: use_case is vmkernel_bundled
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
