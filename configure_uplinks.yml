@@ -247,22 +247,48 @@
 
     - block:
 
+      # In the GUI, this creates a new PC/VPC Interface Policy Group under
+      # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
       - name: Create new virtual-port-channel policy-group for the management vlans
         aci_rest:
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/mo/uni/infra/funcprof/accbundle-test_server.json"
+          path: "/api/node/mo/uni/infra/funcprof/accbundle-\"{{ server_name }}\".json"
           method: post
           output_level: debug
           validate_certs: no
           src: ./vars/vpc_policy_group.json
         register: policy_group_result
 
-      - name: Confirm mgmt_result
+      - name: Confirm policy_group_result
         debug:
           var: policy_group_result
 
       when: use_case == "vmkernel_bundled"
+
+#### 7.1.) If 4.d (VmGuest ports - bundled) == true Create new virtual-port-channel policy-group for the VM Guests ####
+
+    # - block:
+    #
+    #   # In the GUI, this creates a new PC/VPC Interface Policy Group under
+    #   # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
+    #   - name: Create new virtual-port-channel policy-group for the management vlans
+    #     aci_rest:
+    #       host: "{{ inventory_hostname }}"
+    #       username: "{{ aci_username }}"
+    #       password: "{{ aci_password }}"
+    #       path: "/api/node/mo/uni/infra/funcprof/accbundle-test_server.json"
+    #       method: post
+    #       output_level: debug
+    #       validate_certs: no
+    #       src: ./vars/vpc_policy_group.json
+    #     register: policy_group_result
+    #
+    #   - name: Confirm policy_group_result
+    #     debug:
+    #       var: policy_group_result
+    #
+    #   when: use_case == "vmguest_bundled"
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
