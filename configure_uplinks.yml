@@ -203,4 +203,8 @@
         validate_certs: no
       register: mgmt_result
 
+    - name: Confirm mgmt_result
+      debug:
+        var: mgmt_result
+
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
