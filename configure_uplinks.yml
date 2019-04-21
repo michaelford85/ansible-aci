@@ -112,25 +112,26 @@
 #For this POC, we will simply choose the first available ports from the variable file
     - name: Delete any existing selected port variable file
       file:
-        path: "./vars/{{ item }}_selected_ports.yml"
+        path: "./vars/selected_ports_{{ item }}.yml"
         state: absent
       loop: "{{ leaf_switches }}"
 
     - name: Choose first two available ports from each switch in the pair
       template:
         src: ./templates/selected_ports.j2
-        dest: "./vars/{{ item }}_selected_ports.yml"
+        dest: "./vars/selected_ports_{{ item }}.yml"
       loop: "{{ leaf_switches }}"
 
     - name: Include selected_ports variable for processing
       include_vars:
-        file: "./vars/{{ item }}_selected_ports.yml"
+        file: "./vars/selected_ports_{{ item }}.yml"
       loop: "{{ leaf_switches }}"
 
     #NOTE: Strictly here to show we got the values we wanted
-    - name: confirm 201_selected_ports variable
+    - name: confirm selected_ports variable
       debug:
-        var: 201_selected_ports
+        var: 'selected_ports_{{ item }}'
+      loop: "{{ leaf_switches }}"
 
 #### 4) User must choose the use-case ####
 #TODO: In production, the use_case variable will be selected by the operator in SNOW.
