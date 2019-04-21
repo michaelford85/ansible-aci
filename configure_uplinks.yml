@@ -116,6 +116,11 @@
         state: absent
       loop: "{{ leaf_switches }}"
 
+    - name: Debug leaf_switches
+      debug:
+        var: item
+      loop: "{{ leaf_switches }}"
+
     - name: Choose first two available ports from each switch in the pair
       template:
         src: ./templates/selected_ports.j2
