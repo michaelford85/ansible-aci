@@ -110,6 +110,11 @@
 #### 3) User must choose switch pair and interfaces to configure ####
 #TODO: In production, the open_ports variable will be made available in SNOW.
 #For this POC, we will simply choose the first available ports from the variable file
+    - name: Delete any existing selected port variable file
+      file:
+        path: ./vars/selected_ports.yml
+        state: absent
+
     - name: Choose first two available ports from each switch in the pair
       template:
         src: ./templates/selected_ports.j2
