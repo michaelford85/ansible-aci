@@ -278,7 +278,7 @@
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
           password: "{{ aci_password }}"
-          path: "/api/node/mo/uni/infra/funcprof/accbundle-{{server_name}}Guests-VpcPolGrp.json"
+          path: "/api/node/mo/uni/infra/funcprof/accbundle-Vpc-{{server_name}}Guests-VpcPolGrp.json"
           method: post
           output_level: debug
           validate_certs: no
