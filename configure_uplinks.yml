@@ -8,7 +8,20 @@
     - ./credentials/aci_credentials.yml
   vars:
     leaf_switches: []
-    selected_ports: []
+    selected_ports_201:
+      - switch: 201
+        port: 1
+        count: 0
+      - switch: 201
+        port: 3
+        count: 1
+    selected_ports_202:
+      - switch: 202
+        port: 17
+        count: 0
+      - switch: 202
+        port: 18
+        count: 1
 
   tasks:
 
@@ -110,11 +123,11 @@
 #### 3) User must choose switch pair and interfaces to configure ####
 #TODO: In production, the open_ports variable will be made available in SNOW.
 #For this POC, we will simply choose the first available ports from the variable file
-    - name: Delete any existing selected port variable file
-      file:
-        path: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
-        state: absent
-      loop: "{{ leaf_switches }}"
+    # - name: Delete any existing selected port variable file
+    #   file:
+    #     path: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
+    #     state: absent
+    #   loop: "{{ leaf_switches }}"
 
     # - name: Choose first two available ports from each switch in the pair
     #   template:
@@ -122,11 +135,11 @@
     #     dest: "./vars/selected_ports_{{ item }}.yml"
     #   loop: "{{ leaf_switches }}"
 
-    - name: Include selected_ports variable for processing
-      include_vars:
-        file: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
-      loop: "{{ leaf_switches }}"
-      delegate_to: localhost
+    # - name: Include selected_ports variable for processing
+    #   include_vars:
+    #     file: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
+    #   loop: "{{ leaf_switches }}"
+    #   delegate_to: localhost
 
     #NOTE: Strictly here to show we got the values we wanted
     - name: confirm selected_ports variable
