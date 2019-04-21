@@ -126,6 +126,7 @@
       include_vars:
         file: "{{ playbook_dir }}/vars/selected_ports_{{ item }}.yml"
       loop: "{{ leaf_switches }}"
+      delegate_to: localhost
 
     #NOTE: Strictly here to show we got the values we wanted
     - name: confirm selected_ports variable
