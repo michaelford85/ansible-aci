@@ -1,8 +1,8 @@
 ---
 open_ports:
-{% for port in open_ports %}
-{% if port.switch  == {{ item }} %}
-  - switch: {{ port.switch }}
-    port: {{ port.port }}
+{% for entry in open_ports.yml %}
+{% if entry is search("accportprof") %}
+  - switch: {{entry | regex_search('prof-(\\d+)')}}
+    port: {{entry | regex_search('(\\d+)-IfSel')}}
 {% endif %}
 {% endfor %}
