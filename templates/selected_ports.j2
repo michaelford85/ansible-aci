@@ -1,10 +1,11 @@
 ---
 selected_ports_{{ item }}:
+{% set count = namespace(items=0) %}
 {% for port in open_ports %}
-  - port.switch: {{ port.switch }}
-    item: {{ item }}
-{% if item == port.switch %}
-    switch: {{ port.switch }}
+{% if port.switch  == item and count.items <= 1 %}
+  - switch: {{ port.switch }}
     port: {{ port.port }}
+    count: {{ count.items }}
+{% set count.items = count.items+1 %}
 {% endif %}
 {% endfor %}

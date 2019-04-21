@@ -1,0 +1,8 @@
+---
+selected_ports_202:
+  - switch: 202
+    port: 17
+    count: 0
+  - switch: 202
+    port: 18
+    count: 1
