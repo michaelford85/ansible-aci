@@ -5,7 +5,6 @@ selected_ports_{{ item }}:
 {% if port.switch  == item and count.items <= 1 %}
   - switch: {{ port.switch }}
     port: {{ port.port }}
-    count: {{ count.items }}
 {% set count.items = count.items+1 %}
 {% endif %}
 {% endfor %}
