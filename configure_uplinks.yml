@@ -238,6 +238,6 @@
         debug:
           var: vsan_result
 
-      when: use_case is vmkernel_bundled
+      when: use_case == "vmkernel_bundled"
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
