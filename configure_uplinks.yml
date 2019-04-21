@@ -240,4 +240,28 @@
 
       when: use_case == "vmkernel_bundled" or use_case == "vmkernel_unbundled"
 
+
+#### 7.) If use-case is a port-channel bundle then create the appropriate virtual-port-channel policy-group ####
+
+#### 7.1.) If 4.b (VmKernel port - trunked, bundled) == true    Create new virtual-port-channel policy-group for the management vlans ####
+
+    - block:
+
+      - name: Create new virtual-port-channel policy-group for the management vlans
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/funcprof/accbundle-Vpc-\"{{server_name}}\"-VpcPolGrp.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+        register: policy_group_result
+
+      - name: Confirm mgmt_result
+        debug:
+          var: policy_group_result
+
+      when: use_case == "vmkernel_bundled"
+
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
