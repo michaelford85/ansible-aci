@@ -150,5 +150,8 @@
 
 
 #### 5.) User must provide the server name -->  {{server_name}}  ( convert to title-case ) ####
+#TODO: In production, the server variable will be selected by the operator in SNOW.
+#For this POC, we will simply populate the server variable with a survey
+#The default value in the survey is use_case: test_server
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
