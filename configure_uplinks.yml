@@ -8,6 +8,7 @@
     - ./credentials/aci_credentials.yml
   vars:
     leaf_switches: []
+    vmkernel_apps: []
     selected_ports_201:
       - switch: 201
         port: 1
@@ -157,8 +158,7 @@
 #### 6.) If 4.a or 4.b == true Need to get the 3 trunked vlans by having the user choose a ####
 #### VMKernel Application to assign the server to ####
 
-      #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
-      #NOTE: For each switch, this task appends the open port objects to leaf_interface_profile_result
+      #endpoint: https://{{ inventory_hostname }}/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))
     - name: Query for all VMKernel Applications
       aci_rest:
         host: "{{ inventory_hostname }}"
@@ -173,5 +173,15 @@
     - name: Print all VMKernel Applications
       debug:
         var: vmkernel_app_result
+
+    #The leaf_switches variable indicates what leaf switches are in the topology
+    - name: Set vmkernel_apps fact
+      set_fact:
+        vmkernel_apps: "{{ vmkernel_apps }} + {{ item}}"
+      loop: "{{vmkernel_app_result | json_query('imdata[*].fvAp.attributes.name') }}"
+
+    - name: Confirm vmkernel_apps
+      debug:
+        var: vmkernel_apps
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
