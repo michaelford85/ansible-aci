@@ -144,14 +144,34 @@
       loop: "{{ leaf_switches }}"
 
 #### 4) User must choose the use-case ####
-#TODO: In production, the use_case variable will be selected by the operator in SNOW.
+#NOTE: In production, the use_case variable will be selected by the operator in SNOW.
 #For this POC, we will simply populate the use_case variable with a survey
 #The default value in the survey is use_case: vmkernel_bundled
 
 
 #### 5.) User must provide the server name -->  {{server_name}}  ( convert to title-case ) ####
-#TODO: In production, the server variable will be selected by the operator in SNOW.
-#For this POC, we will simply populate the server variable with a survey
-#The default value in the survey is use_case: test_server
+#NOTE: In production, the server variable will be selected by the operator in SNOW.
+#For this POC, we will simply populate the server_name variable with a survey
+#The default value in the survey is server_name: test_server
+
+#### 6.) If 4.a or 4.b == true Need to get the 3 trunked vlans by having the user choose a ####
+#### VMKernel Application to assign the server to ####
+
+      #endpoint: https://{{ inventory_hostname }}/api/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"202"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
+      #NOTE: For each switch, this task appends the open port objects to leaf_interface_profile_result
+    - name: Query for all VMKernel Applications
+      aci_rest:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        path: "/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,"VMKernel"))
+        method: get
+        output_level: debug
+        validate_certs: no
+      register: vmkernel_app_result
+
+    - name: Print all VMKernel Applications
+      debug:
+        var: vmkernel_app_result
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
