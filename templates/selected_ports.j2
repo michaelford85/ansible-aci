@@ -3,7 +3,7 @@ selected_ports_{{ item }}:
 {% for port in open_ports %}
   - port.switch: {{ port.switch }}
     item: {{ item }}
-{% if port.switch  == item %}
+{% if item in port.switch %}
     switch: {{ port.switch }}
     port: {{ port.port }}
 {% endif %}
