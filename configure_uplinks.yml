@@ -27,20 +27,15 @@
     #   debug:
     #     var: leaf_switches_result
 
+    #The leaf_switches variable indicates what leaf switches are in the topology
     - name: Set Leaf Switches fact
       set_fact:
         leaf_switches: "{{ leaf_switches }} + [ '{{ item | regex_replace('[^0-9]+', '') }}' ]"
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
-    - name: Print Leaf Switches fact
-      debug:
-        var: leaf_switches
-
-    # TODO: Comment this out when no longer needed
-    # - name: Print leaf switch node short name
+    # - name: Print Leaf Switches fact
     #   debug:
-    #     msg: "{{ item | regex_replace('[^0-9]+', '') }}"
-    #   loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
+    #     var: leaf_switches
 
     - name: Delete any existing open port variable file
       file:
@@ -62,39 +57,39 @@
       loop: "{{leaf_switches_result | json_query('imdata[*].infraAccPortP.attributes.name') }}"
 
 
-    - name: Print Leaf Interface Result
-      debug:
-        var: leaf_interface_profile_result
+    # - name: Print Leaf Interface Result
+    #   debug:
+    #     var: leaf_interface_profile_result
 
     - name: Copy leaf interface profile results to file
       copy:
         content: "{{ leaf_interface_profile_result | to_nice_json }}"
         dest: open_ports.txt
 
-    - name: Get open ports file lines
+    - name: Convert open_ports.txt file to list variable
       shell: "cat ./open_ports.txt"
       register: port_file_lines
 
-    - name: Populate Variable file
+    - name: Populate open_ports.yml variable file from template
       template:
         src: ./templates/open_ports.j2
         dest: ./vars/open_ports.yml
 
-    - name: Remove unnecessary text for switch
+    - name: Remove extraneous switch text
       replace:
         regexp: 'prof-'
         replace: ''
         backup: no
         path: ./vars/open_ports.yml
 
-    - name: Remove unnecessary text for port
+    - name: Remove extraneous port text
       replace:
         regexp: '-IfSel'
         replace: ''
         backup: no
         path: ./vars/open_ports.yml
 
-    - name: Include new open variables files
+    - name: Include open_ports variable for processing
       include_vars:
         file: ./vars/open_ports.yml
 
@@ -102,7 +97,7 @@
       debug:
         var: open_ports
 
-    - name: Delete open_ports.txt
+    - name: Delete open_ports.txt as it is no longer needed
       file:
         path: ./open_ports.txt
         state: absent
