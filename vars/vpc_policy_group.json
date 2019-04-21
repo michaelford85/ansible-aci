@@ -1,0 +1,45 @@
+{
+  "infraAccBndlGrp": {
+    "attributes": {
+      "status": "created"
+    },
+    "children": [
+      {
+        "infraRsAttEntP": {
+          "attributes": {
+            "tDn": "uni/infra/attentp-Phys-Aep",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      },
+      {
+        "infraRsLacpPol": {
+          "attributes": {
+            "tnLacpLagPolName": "ActiveLacp-PC",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      },
+      {
+        "infraRsCdpIfPol": {
+          "attributes": {
+            "tnCdpIfPolName": "Enable-Cdp",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      },
+      {
+        "infraRsLldpIfPol": {
+          "attributes": {
+            "tnLldpIfPolName": "Disable-Lldp",
+            "status": "created,modified"
+          },
+          "children": []
+        }
+      }
+    ]
+  }
+}

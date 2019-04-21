@@ -256,6 +256,7 @@
           method: post
           output_level: debug
           validate_certs: no
+          src: ./vars/vpc_policy_group.json
         register: policy_group_result
 
       - name: Confirm mgmt_result
