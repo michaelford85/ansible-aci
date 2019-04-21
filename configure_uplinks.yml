@@ -164,7 +164,7 @@
         host: "{{ inventory_hostname }}"
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
-        path: "/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,"VMKernel"))
+        path: "/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))"
         method: get
         output_level: debug
         validate_certs: no
