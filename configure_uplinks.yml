@@ -189,7 +189,7 @@
     #For this POC, we will simply populate the ap_name with the first available app
     - name: Set the selection of the VMKernel app
       set_fact:
-        ap_name: "{{ vmkernel_app[0] }}"
+        ap_name: "{{ vmkernel_apps[0] }}"
 
       #endpoint: https://{{ inventory_hostname }}/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))
     - name: Obtain Management VLAN ID for "{{ ap_name }}"
