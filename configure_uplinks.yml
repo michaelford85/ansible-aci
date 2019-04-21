@@ -191,7 +191,7 @@
       set_fact:
         ap_name: "{{ vmkernel_apps[0] }}"
 
-      #endpoint: https://{{ inventory_hostname }}/api/node/class/fvAp.json?query-target-filter=and(wcard(fvAp.name,\"VMKernel\"))
+
     - name: Obtain Management VLAN ID for "{{ ap_name }}"
       aci_rest:
         host: "{{ inventory_hostname }}"
@@ -206,5 +206,35 @@
     - name: Confirm mgmt_result
       debug:
         var: mgmt_result
+
+    - name: Obtain Vmotion VLAN ID for "{{ ap_name }}"
+      aci_rest:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vmotion\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+        method: get
+        output_level: debug
+        validate_certs: no
+      register: vmotion_result
+
+    - name: Confirm mgmt_result
+      debug:
+        var: vmotion_result
+
+    - name: Obtain VSan VLAN ID for "{{ ap_name }}"
+      aci_rest:
+        host: "{{ inventory_hostname }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        path: "/api/node/class/fvAEPg.json?query-target-filter=and(wcard(fvAEPg.name,\"Vsan\"),wcard(fvAEPg.dn,\"{{ap_name}}\"))&rsp-subtree=full"
+        method: get
+        output_level: debug
+        validate_certs: no
+      register: vsan_result
+
+    - name: Confirm mgmt_result
+      debug:
+        var: vsan_result
 
 # {{apic}}/node/class/infraHPortS.json?query-target-filter=and(wcard(infraHPortS.dn,"{{node_id}}"),eq(infraPortBlk.descr, "open"))&query-target=subtree&rsp-subtree=children&target-subtree-class=infraPortBlk
