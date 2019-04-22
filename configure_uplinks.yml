@@ -234,7 +234,7 @@
 
       - name: Set dn_epg_vmotion fact
         set_fact:
-          dn_epg_management: "{{ vmotion_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
+          dn_epg_vmotion: "{{ vmotion_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
 
       - name: Debug dn_epg_vmotion fact
         debug:
@@ -257,7 +257,7 @@
 
       - name: Set vsan fact
         set_fact:
-          dn_epg_management: "{{ vsan_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
+          dn_epg_vsan: "{{ vsan_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
 
 
       - name: Debug dn_epg_vsan fact
