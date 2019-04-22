@@ -9,12 +9,6 @@
   vars:
     leaf_switches: []
     vmkernel_apps: []
-    # selected_ports_201:
-    #   - switch: 201
-    #     port: 1
-    # selected_ports_202:
-    #   - switch: 202
-    #     port: 17
     leaf_pair_selected_ports:
       - switch: 202
         port: 17
@@ -354,7 +348,6 @@
           method: post
           output_level: debug
           validate_certs: no
-          # src: ./vars/vmhost_phys_ifpolgrp.json
           # used content here as a variable does not resolve when used in a file
           content:
             {
