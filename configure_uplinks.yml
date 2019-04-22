@@ -213,7 +213,7 @@
 
       - name: Debug dn_epg_management fact
         debug:
-          var: dn_epg_management
+          var: dn_epg_management[0]
 
       - name: Obtain Vmotion VLAN ID for "{{ ap_name }}"
         aci_rest:
