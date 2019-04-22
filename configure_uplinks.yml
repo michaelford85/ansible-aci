@@ -20,6 +20,9 @@
         port: 17
       - switch: 201
         port: 1
+    mgmt_vlan: 200
+    vmotion_vlan: 201
+    vsan_vlan: 202
 
   tasks:
 
@@ -208,7 +211,6 @@
 
       - name: Set dn_epg_management fact
         set_fact:
-          # dn_epg_management: "{{ mgmt_result.imdata.fvAEPg.attributes.dn }}"
           dn_epg_management: "{{ mgmt_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
 
       - name: Debug dn_epg_management fact
@@ -230,6 +232,14 @@
         debug:
           var: vmotion_result
 
+      - name: Set dn_epg_vmotion fact
+        set_fact:
+          dn_epg_management: "{{ vmotion_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
+
+      - name: Debug dn_epg_vmotion fact
+        debug:
+          var: dn_epg_vmotion[0]
+
       - name: Obtain VSan VLAN ID for "{{ ap_name }}"
         aci_rest:
           host: "{{ inventory_hostname }}"
@@ -244,6 +254,15 @@
       - name: Confirm vsan_result
         debug:
           var: vsan_result
+
+      - name: Set vsan fact
+        set_fact:
+          dn_epg_management: "{{ vsan_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
+
+
+      - name: Debug dn_epg_vsan fact
+        debug:
+          var: dn_epg_vsan[0]
 
       when: use_case == "vmkernel_bundled" or use_case == "vmkernel_unbundled"
 
@@ -348,29 +367,29 @@
 
 #### 8.2.) Add the port to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
 
-      # - name: Add the port to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
-      #   aci_rest:
-      #     host: "{{ inventory_hostname }}"
-      #     username: "{{ aci_username }}"
-      #     password: "{{ aci_password }}"
-      #     path: "/api/node/mo/{{dn_epg_management}}.json"
-      #     method: post
-      #     output_level: debug
-      #     validate_certs: no
-      #     # src: ./vars/vmhost_phys_ifpolgrp.json
-      #     # used content here as a variable does not resolve when used in a file
-      #     content:
-      #       {
-      #           "fvRsPathAtt": {
-      #               "attributes": {
-      #                   "encap": "vlan-{{mgmt_vlan}}",
-      #                   "instrImedcy": "immediate",
-      #                   "tDn": "topology/pod-1/paths-{{item.switch}}/pathep-[eth1/{{item.port}}]",
-      #                   "status": "created"
-      #               },
-      #               "children": []
-      #           }
-      #       }
-      #   loop: "{{ leaf_pair_selected_ports }}"
+      - name: Add the port to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_management}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # src: ./vars/vmhost_phys_ifpolgrp.json
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{mgmt_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/paths-{{item.switch}}/pathep-[eth1/{{item.port}}]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
 
       when: use_case == "vmkernel_bundled"
