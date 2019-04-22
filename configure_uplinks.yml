@@ -443,3 +443,221 @@
         loop: "{{ leaf_pair_selected_ports }}"
 
       when: use_case == "vmkernel_bundled"
+
+
+#### 9.) If 4.b == true   (VmKernel port - trunked, bundled) ####
+
+    - block:
+
+#### 9.1.) Deploy the VpcPolGrp from Step 7.1 to both nodes ####
+      - name: Deploy the VpcPolGrp from Step 7.1 to both nodes
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/accportprof-{{item.switch}}-IfProf/hports-1:{{item.port}}-IfSel-typ-range.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+              "infraHPortS": {
+                "attributes": {
+                  "status": "modified"
+                },
+                "children": [
+                  {
+                    "infraPortBlk": {
+                      "attributes": {
+                        "descr": "{{server_name}} mgmt-vmotion-vsan",
+                        "name": "block2",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  },
+                  {
+                    "infraRsAccBaseGrp": {
+                      "attributes": {
+                        "tDn": "uni/infra/funcprof/accbundle-Vpc-{{server_name}}-VpcPolGrp",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  }
+                ]
+              }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+
+#### 9.2.) Add the vpcpolgrp to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
+      - name: Add the vpcpolgrp to the "static-paths" of the choosen Application EPGs using the mgmt_vlan
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_management}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{mgmt_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/protpaths-{{leaf_pair_selected_ports[0].switch}}-{{leaf_pair_selected_ports[1].switch}}/pathep-[Vpc-{{server_name}}-VpcPolGrp]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      - name: Add the vpcpolgrp to the "static-paths" of the choosen Application EPGs using the vmotion_vlan
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_vmotion}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{vmotion_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/protpaths-{{leaf_pair_selected_ports[0].switch}}-{{leaf_pair_selected_ports[1].switch}}/pathep-[Vpc-{{server_name}}-VpcPolGrp]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      - name: Add the vpcpolgrp to the "static-paths" of the choosen Application EPGs using the vsan_vlan
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_vsan}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{vsan_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/protpaths-{{leaf_pair_selected_ports[0].switch}}-{{leaf_pair_selected_ports[1].switch}}/pathep-[Vpc-{{server_name}}-VpcPolGrp]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+
+      when: use_case == "vmkernel_bundled"
+
+#### 10.) If 4.c == true (VmGuest ports - unbundled)  Deploy the VmHost-Vmm-IfPolGrp to node_id[0-1] ####
+
+    - block:
+
+      - name: Deploy the VmHost-Vmm-IfPolGrp to node_id[0-1]
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/accportprof-{{item.switch}}-IfProf/hports-1:{{item.port}}-IfSel-typ-range.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+              "infraHPortS": {
+                "attributes": {
+                  "status": "modified"
+                },
+                "children": [
+                  {
+                    "infraPortBlk": {
+                      "attributes": {
+                        "descr": "{{server_name}} vm-guests",
+                        "name": "block2",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  },
+                  {
+                    "infraRsAccBaseGrp": {
+                      "attributes": {
+                        "tDn": "uni/infra/funcprof/accportgrp-VmHost-Vmm-IfPolGrp",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  }
+                ]
+              }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      when: use_case == "vmguest_unbundled"
+
+#### 11.) If 4.d == true (VmGuest ports - bundled)  Deploy the VpcPolGroup from step 7.2 to node_id[0-1] ####
+
+    - block:
+
+      - name: Deploy the VpcPolGroup from step 7.2 to node_id[0-1]
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/uni/infra/accportprof-{{item.switch}}-IfProf/hports-1:{{item.port}}-IfSel-typ-range.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+              "infraHPortS": {
+                "attributes": {
+                  "status": "modified"
+                },
+                "children": [
+                  {
+                    "infraPortBlk": {
+                      "attributes": {
+                        "descr": "{{server_name}} vm-guests",
+                        "name": "block2",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  },
+                  {
+                    "infraRsAccBaseGrp": {
+                      "attributes": {
+                        "tDn": "uni/infra/funcprof/accbundle-Vpc-{{server_name}}Guest-VpcPolGrp",
+                        "status": "created,modified"
+                      },
+                      "children": []
+                    }
+                  }
+                ]
+              }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      when: use_case == "vmguest_unbundled"
