@@ -7,6 +7,10 @@ apic: ada_prod
 #Acceptable values are: vmkernel_bundled, vmkernel_unbundled, vmguest_bundled, vmguest_unbundled
 use_case: vmkernel_bundled
 
+mgmt_vlan: 200
+vmotion_vlan: 201
+vsan_vlan: 202
+
 #APIC Login Credentials
 aci_username: "{{ vaulted_aci_username }}"
 aci_password: "{{ vaulted_aci_password }}"

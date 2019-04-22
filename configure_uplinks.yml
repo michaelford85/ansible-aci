@@ -9,20 +9,17 @@
   vars:
     leaf_switches: []
     vmkernel_apps: []
-    selected_ports_201:
-      - switch: 201
-        port: 1
-    selected_ports_202:
-      - switch: 202
-        port: 17
+    # selected_ports_201:
+    #   - switch: 201
+    #     port: 1
+    # selected_ports_202:
+    #   - switch: 202
+    #     port: 17
     leaf_pair_selected_ports:
       - switch: 202
         port: 17
       - switch: 201
         port: 1
-    mgmt_vlan: 200
-    vmotion_vlan: 201
-    vsan_vlan: 202
 
   tasks:
 
