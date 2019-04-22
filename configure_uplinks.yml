@@ -208,7 +208,8 @@
 
       - name: Set dn_epg_management fact
         set_fact:
-          dn_epg_management: "{{ mgmt_result.imdata.fvAEPg.attributes.dn }}"
+          # dn_epg_management: "{{ mgmt_result.imdata.fvAEPg.attributes.dn }}"
+          dn_epg_management: "{{ mgmt_result | json_query('imdata[*].fvAEPg.attributes.dn') }}"
 
       - name: Debug dn_epg_management fact
         debug:
