@@ -206,6 +206,14 @@
         debug:
           var: mgmt_result
 
+      - name: Set dn_epg_management fact
+        set_fact:
+          dn_epg_management: mgmt_result.imdata.fvAEPg.dn
+
+      - name: Debug dn_epg_management fact
+        debug:
+          var: dn_epg_management
+
       - name: Obtain Vmotion VLAN ID for "{{ ap_name }}"
         aci_rest:
           host: "{{ inventory_hostname }}"
@@ -217,7 +225,7 @@
           validate_certs: no
         register: vmotion_result
 
-      - name: Confirm mgmt_result
+      - name: Confirm vmotion_result
         debug:
           var: vmotion_result
 
@@ -232,7 +240,7 @@
           validate_certs: no
         register: vsan_result
 
-      - name: Confirm mgmt_result
+      - name: Confirm vsan_result
         debug:
           var: vsan_result
 
