@@ -298,8 +298,7 @@
 
     - block:
 
-      # In the GUI, this creates a new PC/VPC Interface Policy Group under
-      # Fabric->Access Policies->Interfaces->Leaf Interfaces->Policy Groups->PC Interface
+
       - name: Deploy the VmHost-Phys-IfPolGrp and update the description of the interface-selector on both nodes
         aci_rest:
           host: "{{ inventory_hostname }}"
