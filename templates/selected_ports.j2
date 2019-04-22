@@ -1,5 +1,3 @@
----
-selected_ports_{{ item }}:
 {% set count = namespace(items=0) %}
 {% for port in open_ports %}
 {% if port.switch  == item and count.items <= 1 %}
