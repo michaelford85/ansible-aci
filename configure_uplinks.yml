@@ -367,7 +367,7 @@
 
 #### 8.2.) Add the port to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
 
-      - name: Add the port to the "static-paths" of the choosen Application EPGs using the vlan_ids definded in step 6. ####
+      - name: Add the port to the "static-paths" of the choosen Application EPGs using the mgmt_vlan ####
         aci_rest:
           host: "{{ inventory_hostname }}"
           username: "{{ aci_username }}"
@@ -383,6 +383,56 @@
                 "fvRsPathAtt": {
                     "attributes": {
                         "encap": "vlan-{{mgmt_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/paths-{{item.switch}}/pathep-[eth1/{{item.port}}]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      - name: Add the port to the "static-paths" of the choosen Application EPGs using the vmotion_vlan ####
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_vmotion[0]}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # src: ./vars/vmhost_phys_ifpolgrp.json
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{vmotion_vlan}}",
+                        "instrImedcy": "immediate",
+                        "tDn": "topology/pod-1/paths-{{item.switch}}/pathep-[eth1/{{item.port}}]",
+                        "status": "created"
+                    },
+                    "children": []
+                }
+            }
+        loop: "{{ leaf_pair_selected_ports }}"
+
+      - name: Add the port to the "static-paths" of the choosen Application EPGs using the vsan_vlan ####
+        aci_rest:
+          host: "{{ inventory_hostname }}"
+          username: "{{ aci_username }}"
+          password: "{{ aci_password }}"
+          path: "/api/node/mo/{{dn_epg_vsan[0]}}.json"
+          method: post
+          output_level: debug
+          validate_certs: no
+          # src: ./vars/vmhost_phys_ifpolgrp.json
+          # used content here as a variable does not resolve when used in a file
+          content:
+            {
+                "fvRsPathAtt": {
+                    "attributes": {
+                        "encap": "vlan-{{vsan_vlan}}",
                         "instrImedcy": "immediate",
                         "tDn": "topology/pod-1/paths-{{item.switch}}/pathep-[eth1/{{item.port}}]",
                         "status": "created"
