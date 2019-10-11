@@ -10,6 +10,9 @@ aits_preprod
 apic27-sim-2-a.intranet.local
 apic27-sim-2-b.intranet.local
 apic27-sim-2-c.intranet.local
+apic27-sim-2-d.intranet.local
+apic27-sim-2-e.intranet.local
+apic27-sim-2-f.intranet.local
 
 
 [ada_preprod]
